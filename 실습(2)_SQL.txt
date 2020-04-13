@@ -1,0 +1,73 @@
+path 지정 후에는 mysqld start를 안해줘도 된당!
+그리고 mysql -u root!임 user가 아니라 -p
+
+항상 데이터 베이스 검색
+show databases;
+그리고 데이터베이스 선택
+use world;/user madang;
+테이블 보기
+show tables;
++화살표 위아래 방향 누르면 썼던 명령어 또 쓸 수 있음
+--------------------------------------------------------
+SELECT 문
+
+기본 : SELECT [ALL|DISTINCT} 속성이름(들) FROM 테이블이름(들)
+
+SELECT bookname,publisher from BOOK WHERE price>=10000;
+*옵션들은 테이블이름 뒤에 붙음
+
+(1)필드이름들 알아보는 방법
+describe(desc) 테이블이름 : 테이블 보여줌. 그 안에 스키마 확인가능
+
+(2)모든 속성 가져오기 
+*(애스터리스크) 사용
+select * from 테이블이름
+
+(3)중복 제거 
+SELECT DISTINCT 테이블이름
+
+(4)WHERE 조건
+!= 와 <>는 같은 비교연산 표현
+비교연산자는 문자,숫자 다 비교가능
+범위 BETWEEN
+집합 IN, NOT IN: 집합안에 있는 것들만 검색
+패턴 LIKE : 부분문자 비교, 서브패턴 찾을 때. 정확하게 똑같이매칭되지 않을 때. 
+NULL : =연산자 못씀. IS NULL IS NOT NULL 써야함
+복합조건 AND.OR,NOT
+=>메모리관리,성능관리 해야함. 무분별하게 작성해서는 안된다.
+
++ 문자는 ' ' 작은따옴표로 표시(cf.오라클은 " ")
+
++ sql명령문을 한줄로 쓸 필요 없다. 
+select bookid, bookname
+-> from book
+-> where bookname like '축구%';
+이런식으로 써도됨.
++ %의미는 (앞)뒤에 어떤 문자가 와도 상관없다는 것. 
+
++와일드 문자의 종류 알아두기
+=>무분별하게 써선 안됨. 메모리에 영향끼침
+
+'='과 'like'의 차이 알기
+=는 전체문자열을 비교한다.
+대구광역시 != 대구광역시 수성구
+like "대구%"로 검색해야한다.
+
+ORDER BY :오름차순 정렬
+속성 두개 쓸 쑤 있음.가격순으로 정리 후 영어먼저->한글먼저보여줌
+
+select * from book
+order by price DESC, publisher ASC(오름차순)
++어센드할 떄 NULL이 가장 앞에나옴(NULL이 제일 작으니까)<->디센드할 땐 가장 마지막에 NULL이 온다.
+
+산술식을 이용해 검색가능
+price * 1.1 하면 1.1배 된 값을 보여좀. 단 원래 데이터는 변경없음
++산술식 그대로 안나오게 하려면
+price*1.1 new_price or "new price" or new(한글자) 로 alias 지정가능
+
+NULL 실수 조심
+
+++실습문제1~13 풀고 답안을 과제로 제출!
+use sample show tables. 
+no값은 auto increment DB가 의미없이 대체키로 주는 것
+where no=2; 이런거 안됨. 의미있는 값 비교할 것!
